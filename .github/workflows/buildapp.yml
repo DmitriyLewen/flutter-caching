@@ -13,21 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
-
       - name: Set Up flutter
         uses: subosito/flutter-action@v1
 
@@ -37,9 +22,7 @@ jobs:
       - name: Build app
         run: flutter build apk --release
 
-      - name: Upload to release
-        uses: JasonEtco/upload-to-release@master
+      - uses: ncipollo/release-action@v1
         with:
-          args: app-release.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "build/app/outputs/flutter-apk/*.apk"
+          token: ${{ secrets.GITHUB_TOKEN }}
