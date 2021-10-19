@@ -1,0 +1,3 @@
+path: pubspec.yaml
+behavior: after
+template: v{{.Version}}
