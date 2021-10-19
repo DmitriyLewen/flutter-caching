@@ -19,10 +19,11 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Build app
+      - name: Build apk
         run: flutter build apk --release
 
-      - uses: ncipollo/release-action@v1
+      - name: Make release and copy apk
+        uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/flutter-apk/*-release.apk"
           token: ${{ secrets.GITHUB_TOKEN }}
